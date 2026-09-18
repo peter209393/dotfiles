@@ -13,3 +13,6 @@ fish/conf.d/local.fish
 /.claude/
 /.DS_Store
 
+
+# fcitx5 运行时生成的键盘布局缓存,不是配置
+fcitx5/conf/cached_layouts

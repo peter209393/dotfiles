@@ -28,7 +28,7 @@ nvim --headless "+Lazy! sync" +qa   # verify nvim plugin changes
 `~/.config` target:
 
 ```
-stow --restow --target=$HOME/.config/<pkg> <pkg>     # fish nvim alacritty ghostty i3 sway waybar
+stow --restow --target=$HOME/.config/<pkg> <pkg>     # fish nvim helix alacritty ghostty fcitx5 i3 sway waybar
 stow --restow --target=$HOME                tmux
 ```
 

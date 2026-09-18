@@ -217,13 +217,14 @@ stow_packages() {
         [helix]="$HOME/.config/helix"
         [alacritty]="$HOME/.config/alacritty"
         [ghostty]="$HOME/.config/ghostty"
+        [fcitx5]="$HOME/.config/fcitx5"
         [i3]="$HOME/.config/i3"
         [sway]="$HOME/.config/sway"
         [waybar]="$HOME/.config/waybar"
         [tmux]="$HOME"
     )
 
-    for pkg in fish nvim helix alacritty ghostty i3 sway waybar tmux; do
+    for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar tmux; do
         if [ -d "$pkg" ]; then
             local target="${targets[$pkg]}"
             log "stow $pkg -> $target"

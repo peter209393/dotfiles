@@ -24,9 +24,10 @@ A cross-platform (**macOS** + **Linux**) dotfiles repo for **Fish**, **Neovim**,
 - [7. Waybar](#7-waybar)
 - [8. Tmux (Oh My Tmux!)](#8-tmux-oh-my-tmux)
 - [9. Helix](#9-helix)
-- [10. Platform cheat-sheet](#10-platform-cheat-sheet)
-- [11. Daily-use quick start](#11-daily-use-quick-start)
-- [12. Extending the config](#12-extending-the-config)
+- [10. fcitx5 (input method)](#10-fcitx5-input-method)
+- [11. Platform cheat-sheet](#11-platform-cheat-sheet)
+- [12. Daily-use quick start](#12-daily-use-quick-start)
+- [13. Extending the config](#13-extending-the-config)
 
 ---
 
@@ -58,6 +59,7 @@ nvim/      -> ~/.config/nvim
 helix/     -> ~/.config/helix
 alacritty/ -> ~/.config/alacritty
 ghostty/   -> ~/.config/ghostty
+fcitx5/    -> ~/.config/fcitx5   (conf/cached_layouts stays local)
 i3/        -> ~/.config/i3
 sway/      -> ~/.config/sway
 waybar/    -> ~/.config/waybar
@@ -433,9 +435,13 @@ Config in `sway/config`:
   adjust the focused workspace, `0` resets, `Esc` exits).
 - `Alt+P` opens **Vicinae** launcher; `Print` = full screenshot to clipboard;
   `Alt+Shift+S` = region to clipboard; `Alt+Ctrl+S` = region to file.
-- **Autostarts:** fcitx5 (input method), blueman, nm-applet, voice-type (ZAI),
-  vicinae server, dunst (notifications); restarts pipewire / wireplumber /
-  xdg-desktop-portal.
+- **Autostarts:** fcitx5 (input method), voice-type (ZAI), vicinae server, dunst
+  (notifications); restarts pipewire / wireplumber / xdg-desktop-portal.
+  `blueman-applet` and `nm-applet` are **commented out on purpose** - their tray
+  icons are the only colour left on an otherwise monochrome bar, and Waybar
+  already covers the network. Bluetooth and NetworkManager themselves are
+  untouched: `blueman-manager`, `nm-connection-editor` (click the Waybar WiFi
+  glyph) and `nmtui` all still work.
 - `Ctrl` remapped to CapsLock (`xkb_options ctrl:nocaps`); adaptive sync + 10-bit
   color on; `DP-1` scaled 1.5x.
 - Bar = **Waybar** (bottom). Android Emulator floats.
@@ -460,8 +466,23 @@ states light up.
   percentages and SSID live in the tooltips. Scroll on the volume icon to adjust,
   click to mute.
 
-No window title on the bar. Icons are Nerd Font glyphs - the file assumes
-**FiraCode Nerd Font**.
+No window title on the bar. The tray is deliberately near-empty: Bluetooth and
+network applets are commented out in `sway/config`, and fcitx5's tray icon is off
+via the tracked `fcitx5/config`:
+
+```ini
+[Behavior/DisabledAddons]
+0=notificationitem
+```
+
+fcitx5 options of list type need that section-with-numeric-keys form - a plain
+`DisabledAddons=notificationitem` under `[Behavior]` parses but does nothing.
+
+Icons are Nerd Font glyphs and the file assumes **FiraCode Nerd Font**. They are
+written as JSON `\u` escapes (surrogate pairs for the `U+F0xxx` Material range),
+not as literal characters - literal PUA glyphs are easy to lose to an editor or a
+shell heredoc, and a lost glyph shows up as a silently empty module rather than
+an error.
 
 > Reload after editing: `pkill -SIGUSR2 waybar` restarts it, but Sway owns the
 > process (`swaybar_command waybar`), so `swaymsg reload` / `Alt+Shift+C` is the
@@ -521,7 +542,37 @@ mode. Docs: https://docs.helix-editor.com/configuration.html
 
 ---
 
-## 10. Platform cheat-sheet
+## 10. fcitx5 (input method)
+
+Tracked as its own stow package - `fcitx5/config`, `fcitx5/profile` and
+`fcitx5/conf/*.conf` link into `~/.config/fcitx5/`. `conf/cached_layouts` is a
+generated keyboard-layout cache, left untracked and gitignored.
+
+- **Groups:** `keyboard-us` + `pinyin`. `Ctrl+Space` toggles, `Super+Space`
+  cycles groups, `Shift_L` is the alt-trigger.
+- **Pinyin:** Ziranma shuangpin profile, 7 candidates per page, `;` for
+  quickphrase, `v` as quickphrase prefix, cloud pinyin off. Fuzzy matching is
+  conservative - only `ue/ve`, `ng/gn`, inner-segment and partial-final are on;
+  the `zh/z`, `an/ang`, `l/n` style pairs are all off.
+- **Simplified <-> Traditional:** `Ctrl+Shift+F` (OpenCC).
+- **No tray icon** - the `notificationitem` addon is disabled:
+
+```ini
+[Behavior/DisabledAddons]
+0=notificationitem
+```
+
+> fcitx5's list-type options need that section-with-numeric-keys form. A plain
+> `DisabledAddons=notificationitem` under `[Behavior]` parses without error and
+> does nothing at all.
+
+Verified that fcitx5 rewrites these files in place rather than replacing them, so
+the symlinks survive a graceful exit and runtime input-method switches - the
+config does not silently drift back out of the repo.
+
+---
+
+## 11. Platform cheat-sheet
 
 | Component | macOS | Linux |
 |---|---|---|
@@ -539,7 +590,7 @@ serves both OSes**.
 
 ---
 
-## 11. Daily-use quick start
+## 12. Daily-use quick start
 
 ```bash
 # shell
@@ -573,7 +624,7 @@ gd / gr             " lsp go-to definition / references
 
 ---
 
-## 12. Extending the config
+## 13. Extending the config
 
 - **Fish function:** drop `~/.config/fish/functions/foo.fish` (auto-available).
 - **Fish config snippet:** drop `~/.config/fish/conf.d/foo.fish` (auto-sourced).

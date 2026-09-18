@@ -13,8 +13,8 @@
   "sway/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "focused": "●",
-      "urgent": "●"
+      "focused": "\u25cf",
+      "urgent": "\u25cf"
     },
     "disable-scroll": false
   },
@@ -36,21 +36,21 @@
     }
   },
 
-  // 右侧一律只出图标,百分比放进 tooltip
+  // 图标全部写成 \u 转义:U+F2xx 是 Font Awesome 段,U+F0xxx 是 Material 段(需代理对)
   "battery": {
     "states": { "warning": 30, "critical": 15 },
     "format": "{icon}",
-    "format-charging": "",
-    "format-plugged": "",
-    "format-icons": ["", "", "", "", ""],
+    "format-charging": "\uf0e7",
+    "format-plugged": "\uf0e7",
+    "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240"],
     "tooltip-format": "{capacity}%  {timeTo}",
     "interval": 30
   },
 
   "pulseaudio": {
     "format": "{icon}",
-    "format-muted": "",
-    "format-icons": { "default": ["", "", ""] },
+    "format-muted": "\uf026",
+    "format-icons": { "default": ["\uf026", "\uf027", "\uf028"] },
     "tooltip-format": "{desc}  {volume}%",
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
@@ -58,9 +58,9 @@
   },
 
   "network": {
-    "format-wifi": "",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰖪",
+    "format-wifi": "\uf1eb",
+    "format-ethernet": "\udb80\ude00",
+    "format-disconnected": "NO\uf1eb",
     "tooltip-format-wifi": "{essid}  {signalStrength}%  {ipaddr}",
     "tooltip-format-ethernet": "{ifname}  {ipaddr}",
     "on-click": "nm-connection-editor"

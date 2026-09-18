@@ -25,7 +25,7 @@ cd ~/works/dotfiles
 
 1. **系统包** — macOS 用 Homebrew,Linux 用发行版自带包管理器
 2. **Oh My Tmux!** — 克隆上游到 `~/.tmux`,软链 `~/.tmux.conf`
-3. **Stow 软链接** — `fish/ nvim/ helix/ alacritty/ ghostty/ i3/ sway/ waybar/` 全部链接到 `~/.config/`
+3. **Stow 软链接** — `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/` 全部链接到 `~/.config/`
 4. **Fish 插件** — Fisher + 4 个插件(写进 `fish_plugins`;部分插件文件已 vendored 在仓库内)
 5. **Neovim 插件** — lazy.nvim 首次启动自动拉取
 6. **环境变量文件** — `conf.d/_99_dotfiles_env.fish`(代理 / fcitx)
@@ -64,6 +64,7 @@ dotfiles/
 │   ├── lazy-lock.json        # 插件版本锁
 │   └── lua/{config,plugins}/
 ├── helix/                   # Helix 编辑器(config.toml + themes/)
+├── fcitx5/                   # fcitx5 输入法(config、profile、conf/*.conf)
 ├── i3/                       # i3 窗口管理器配置
 ├── sway/                     # Sway 窗口管理器配置
 ├── waybar/                   # Waybar 状态栏(config + style.css)
@@ -142,7 +143,7 @@ ln -sf .tmux/.tmux.conf ~/.tmux.conf
 ```bash
 cd ~/works/dotfiles
 mkdir -p ~/.config
-for pkg in fish nvim helix alacritty ghostty i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
     mkdir -p ~/.config/$pkg
     stow --restow --target=$HOME/.config/$pkg $pkg
 done
@@ -261,7 +262,7 @@ nvim +":Mason" +qa
 
 ```bash
 cd ~/works/dotfiles
-for pkg in fish nvim helix alacritty ghostty i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
     stow --delete --target=$HOME/.config/$pkg $pkg
 done
 

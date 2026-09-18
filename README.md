@@ -25,7 +25,7 @@ The script does:
 
 1. **System packages** — Homebrew on macOS; the distro package manager on Linux.
 2. **Oh My Tmux!** — clones upstream into `~/.tmux` and symlinks `~/.tmux.conf`.
-3. **Stow symlinks** — links `fish/ nvim/ helix/ alacritty/ ghostty/ i3/ sway/ waybar/` into `~/.config/`.
+3. **Stow symlinks** — links `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/` into `~/.config/`.
 4. **Fish plugins** — Fisher plus 4 plugins (written to `fish_plugins`; some plugin files are vendored in this repo).
 5. **Neovim plugins** — lazy.nvim fetches them on first start.
 6. **Env file** — `conf.d/_99_dotfiles_env.fish` (proxy / fcitx).
@@ -64,6 +64,7 @@ dotfiles/
 │   ├── lazy-lock.json        # plugin version lock
 │   └── lua/{config,plugins}/
 ├── helix/                   # Helix editor (config.toml + themes/)
+├── fcitx5/                   # fcitx5 input method (config, profile, conf/*.conf)
 ├── i3/                       # i3 window manager config
 ├── sway/                     # Sway window manager config
 ├── waybar/                   # Waybar status bar (config + style.css)
@@ -142,7 +143,7 @@ ln -sf .tmux/.tmux.conf ~/.tmux.conf
 ```bash
 cd ~/works/dotfiles
 mkdir -p ~/.config
-for pkg in fish nvim helix alacritty ghostty i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
     mkdir -p ~/.config/$pkg
     stow --restow --target=$HOME/.config/$pkg $pkg
 done
@@ -262,7 +263,7 @@ nvim +":Mason" +qa
 
 ```bash
 cd ~/works/dotfiles
-for pkg in fish nvim helix alacritty ghostty i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
     stow --delete --target=$HOME/.config/$pkg $pkg
 done
 
