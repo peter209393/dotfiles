@@ -51,7 +51,7 @@ dotfiles/
 ├── README.md                 # 英文说明(默认)
 ├── readme.zh-CN.md           # 本文件
 ├── FEATURES.md               # 各配置的功能细节与用法
-├── alacritty/                # alacritty.toml
+├── alacritty/                # alacritty.toml + themes/(配色方案)
 ├── ghostty/                  # ghostty/config
 ├── fish/                     # Fish shell 配置
 │   ├── config.fish

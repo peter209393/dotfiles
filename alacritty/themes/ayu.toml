@@ -1,0 +1,58 @@
+# Ayu —— 由 /usr/share/ghostty/themes/Ayu 生成,勿手改
+# 换主题:改 alacritty.toml 里 [general] import 指向的文件名
+
+[colors.primary]
+background = "#0b0e14"
+foreground = "#bfbdb6"
+
+[colors.cursor]
+text = "#0b0e14"
+cursor = "#e6b450"
+
+[colors.vi_mode_cursor]
+text = "#0b0e14"
+cursor = "#53bdfa"
+
+[colors.selection]
+text = "#0b0e14"
+background = "#409fff"
+
+[colors.search.matches]
+foreground = "#0b0e14"
+background = "#c7c7c7"
+
+[colors.search.focused_match]
+foreground = "#0b0e14"
+background = "#7fd962"
+
+[colors.footer_bar]
+foreground = "#bfbdb6"
+background = "#11151c"
+
+[colors.hints.start]
+foreground = "#0b0e14"
+background = "#f9af4f"
+
+[colors.hints.end]
+foreground = "#0b0e14"
+background = "#c7c7c7"
+
+[colors.normal]
+black = "#11151c"
+red = "#ea6c73"
+green = "#7fd962"
+yellow = "#f9af4f"
+blue = "#53bdfa"
+magenta = "#cda1fa"
+cyan = "#90e1c6"
+white = "#c7c7c7"
+
+[colors.bright]
+black = "#686868"
+red = "#f07178"
+green = "#aad94c"
+yellow = "#ffb454"
+blue = "#59c2ff"
+magenta = "#d2a6ff"
+cyan = "#95e6cb"
+white = "#ffffff"

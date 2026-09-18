@@ -11,8 +11,10 @@ font-feature = ss02   # 直杠 * -> 打叉
 font-feature = cv30   # 更直的小写 f / 4
 
 # --- 主题与外观 ---
-theme = Catppuccin Mocha
-background-opacity = 0.8
+# 换主题:ghostty +list-themes 里挑(463 个内置主题,方向键实时预览)
+# alacritty 那边的 themes/ 目录就是从这些主题生成的,两边保持同名即可一致
+theme = Carbonfox
+background-opacity = 1
 cursor-style = bar
 cursor-style-blink = false
 

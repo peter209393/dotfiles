@@ -1,0 +1,58 @@
+# Vesper —— 由 /usr/share/ghostty/themes/Vesper 生成,勿手改
+# 换主题:改 alacritty.toml 里 [general] import 指向的文件名
+
+[colors.primary]
+background = "#101010"
+foreground = "#ffffff"
+
+[colors.cursor]
+text = "#ffffff"
+cursor = "#acb1ab"
+
+[colors.vi_mode_cursor]
+text = "#ffffff"
+cursor = "#aca1cf"
+
+[colors.selection]
+text = "#b9beb8"
+background = "#988049"
+
+[colors.search.matches]
+foreground = "#101010"
+background = "#a0a0a0"
+
+[colors.search.focused_match]
+foreground = "#101010"
+background = "#90b99f"
+
+[colors.footer_bar]
+foreground = "#ffffff"
+background = "#101010"
+
+[colors.hints.start]
+foreground = "#101010"
+background = "#e6b99d"
+
+[colors.hints.end]
+foreground = "#101010"
+background = "#a0a0a0"
+
+[colors.normal]
+black = "#101010"
+red = "#f5a191"
+green = "#90b99f"
+yellow = "#e6b99d"
+blue = "#aca1cf"
+magenta = "#e29eca"
+cyan = "#ea83a5"
+white = "#a0a0a0"
+
+[colors.bright]
+black = "#7e7e7e"
+red = "#ff8080"
+green = "#99ffe4"
+yellow = "#ffc799"
+blue = "#b9aeda"
+magenta = "#ecaad6"
+cyan = "#f591b2"
+white = "#ffffff"

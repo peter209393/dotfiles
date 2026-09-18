@@ -51,7 +51,7 @@ dotfiles/
 ├── README.md                 # This file (default, English)
 ├── readme.zh-CN.md           # Chinese readme
 ├── FEATURES.md               # Feature-by-feature guide for every config
-├── alacritty/                # alacritty.toml
+├── alacritty/                # alacritty.toml + themes/ (colour schemes)
 ├── ghostty/                  # ghostty/config
 ├── fish/                     # Fish shell config
 │   ├── config.fish

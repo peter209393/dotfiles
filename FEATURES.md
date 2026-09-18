@@ -372,12 +372,33 @@ Lua auto-formats with `stylua` on save.
 
 Config in `alacritty/alacritty.toml`:
 
-- **Theme:** Catppuccin Mocha (matches nvim / fish).
-- **Font:** FiraCode Nerd Font, size **22**.
-- **Window:** 80% opacity, beam cursor (thickness 0.3), 5000 scrollback lines,
-  selection saves to clipboard.
+- **Theme:** not inline any more - `[general] import` pulls one file out of
+  `alacritty/themes/`. Switching is a one-line edit; the current pick is
+  **Carbonfox** (`#161616`). Shipped: `carbonfox`, `vesper` (`#101010`), `ayu`
+  (`#0b0e14`), `flexoki_dark` (`#100f0f`), `kanagawa_dragon` (`#181616`),
+  `catppuccin_mocha` (`#1e1e2e`, the old default).
+- Those files are **generated from Ghostty's built-in themes**
+  (`/usr/share/ghostty/themes/<Name>`), so both terminals render the same
+  palette as long as the two configs name the same theme.
+- **Font:** FiraCode Nerd Font, size **15**.
+- **Window:** fully opaque (`opacity = 1`), beam cursor (thickness 0.3), 5000
+  scrollback lines, selection saves to clipboard.
 - **Key bindings:** `Ctrl+Shift+C/V` copy/paste, `Ctrl+Cmd+B` send `\e\b`,
   `Ctrl+Cmd+Q` quit, `Ctrl+=/-/0` font size, `F11` fullscreen, `Ctrl+L` clear.
+
+**Where to browse colour schemes:**
+
+| Source | What it is |
+|---|---|
+| `ghostty +list-themes` | Local, interactive, 463 themes previewed live. The fastest way to pick. |
+| [iterm2colorschemes.com](https://iterm2colorschemes.com/) | Screenshot gallery of the same collection Ghostty bundles. |
+| [alacritty/alacritty-theme](https://github.com/alacritty/alacritty-theme) | Ready-made Alacritty TOMLs, drop into `alacritty/themes/`. |
+| [terminal.sexy](https://terminal.sexy) | Build or tweak a palette by hand, export to either format. |
+
+To adopt a theme Ghostty has but `themes/` does not, copy the palette out of
+`/usr/share/ghostty/themes/<Name>` into a new file in the same shape as the
+existing ones (`palette = N=#hex` maps to `colors.normal` 0-7 and
+`colors.bright` 8-15), then point the `import` line at it.
 
 ---
 
@@ -387,7 +408,10 @@ Config in `ghostty/config` (symlinked to `~/.config/ghostty/config`).
 Validate any change with `ghostty +validate-config`.
 
 - **Font:** FiraCode Nerd Font, size **14**, ligature features `ss01 ss02 cv30`.
-- **Theme:** Catppuccin Mocha, 96% background opacity, bar cursor (no blink).
+- **Theme:** **Carbonfox**, fully opaque (`background-opacity = 1`), bar cursor
+  (no blink). Ghostty ships 463 themes - `ghostty +list-themes` is an
+  interactive picker with live preview, and it is the list the Alacritty theme
+  files are generated from.
 - **Window:** 8px balanced padding, macOS tabs titlebar.
 - **Keys / clipboard:** Option-as-Alt, copy-on-select to clipboard, paste
   protection off, no close confirmation.
@@ -569,6 +593,13 @@ generated keyboard-layout cache, left untracked and gitignored.
 Verified that fcitx5 rewrites these files in place rather than replacing them, so
 the symlinks survive a graceful exit and runtime input-method switches - the
 config does not silently drift back out of the repo.
+
+> It does rewrite them, though, so expect `git status` noise after a restart.
+> fcitx5 normalises its files by **commenting out every option that sits at its
+> default**, which makes the diff look like settings were wiped when nothing
+> changed - `# PageSize=7` is still 7. Check a value really moved before acting
+> on one of these diffs; most of what is listed above turns out to be fcitx5's
+> own defaults rather than deliberate tuning.
 
 ---
 
