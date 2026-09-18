@@ -1,11 +1,73 @@
 {
+  // 扁平贴边细条:整条深色实心,无圆角无留白,模块只出图标不出数字
   "layer": "top",
   "position": "top",
-  "modules-left": ["sway/workspaces", "sway/window"],
-  "modules-right": [
-    "cpu",
-    "memory",
-    "tray"
-  ]
-}
+  "height": 26,
+  "spacing": 0,
 
+  "modules-left": ["sway/mode", "sway/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["battery", "pulseaudio", "network", "tray"],
+
+  // 焦点工作区显示实心圆点,其余显示编号
+  "sway/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "focused": "●",
+      "urgent": "●"
+    },
+    "disable-scroll": false
+  },
+
+  // resize / gaps 模式激活时才显示
+  "sway/mode": {
+    "format": "{}"
+  },
+
+  "clock": {
+    "format": "{:%A %H:%M}",
+    "format-alt": "{:%Y-%m-%d %A}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "today": "<span color='#f38ba8'><b>{}</b></span>"
+      }
+    }
+  },
+
+  // 右侧一律只出图标,百分比放进 tooltip
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{icon}",
+    "format-charging": "",
+    "format-plugged": "",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "{capacity}%  {timeTo}",
+    "interval": 30
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": { "default": ["", "", ""] },
+    "tooltip-format": "{desc}  {volume}%",
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  },
+
+  "network": {
+    "format-wifi": "",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+    "tooltip-format-wifi": "{essid}  {signalStrength}%  {ipaddr}",
+    "tooltip-format-ethernet": "{ifname}  {ipaddr}",
+    "on-click": "nm-connection-editor"
+  },
+
+  "tray": {
+    "icon-size": 15,
+    "spacing": 10
+  }
+}

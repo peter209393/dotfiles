@@ -177,8 +177,13 @@ bar {
         status_command i3status
 }
 
-default_border none
-default_floating_border none
+# 窗口之间 8px、屏幕边缘 4px 的留白(i3 4.22+ 内置 gaps)
+gaps inner 8
+gaps outer 4
+# 细边框,配合间距更容易分辨焦点;不想要边框就改回 default_border none
+default_border pixel 2
+default_floating_border pixel 2
+smart_borders on
 
 for_window [window_role="GtkFileChooserDialog"] floating enable
 for_window [title="File Upload"] floating enable

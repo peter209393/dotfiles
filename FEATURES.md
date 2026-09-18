@@ -408,7 +408,9 @@ Config in `i3/config`:
 - `Alt+R` resize mode (hjkl to resize, Esc/Enter to exit).
 - `Alt+Shift+C` reload - `Alt+Shift+R` restart - `Alt+Shift+E` exit i3.
 - Volume keys via pactl; `i3status` bar at bottom.
-- File-chooser dialogs float automatically (centered 800x600). No default borders.
+- File-chooser dialogs float automatically (centered 800x600).
+- **Gaps:** `gaps inner 8` / `gaps outer 4`, `default_border pixel 2` with
+  `smart_borders on` (single window on screen = no border).
 
 ---
 
@@ -424,6 +426,11 @@ Config in `sway/config`:
   `Alt+Shift+Space` float.
 - **Scratchpad:** `Alt+Shift+-` send to scratchpad - `Alt+-` show.
 - `Alt+R` resize mode.
+- **Gaps + borders:** `gaps inner 8` / `gaps outer 4`, `default_border pixel 2`
+  with `smart_borders on`; `client.*` colors are Catppuccin Mocha (mauve
+  `#cba6f7` focused, surface `#313244` unfocused, red `#f38ba8` urgent);
+  `Alt+Shift+G` enters a `gaps` mode (`j`/`k` or `-`/`+`
+  adjust the focused workspace, `0` resets, `Esc` exits).
 - `Alt+P` opens **Vicinae** launcher; `Print` = full screenshot to clipboard;
   `Alt+Shift+S` = region to clipboard; `Alt+Ctrl+S` = region to file.
 - **Autostarts:** fcitx5 (input method), blueman, nm-applet, voice-type (ZAI),
@@ -441,12 +448,24 @@ Config in `sway/config`:
 
 Config in `waybar/config` + `waybar/style.css`:
 
-Minimal top bar - left = `sway/workspaces` + `sway/window`; right = `cpu`,
-`memory`, `tray`. Styled with Catppuccin Mocha background (`#1e1e2e`),
-monospace 10px.
+**Flat edge-to-edge bar**, 26px, solid `#11111b` (Mocha crust) - no gaps, no
+rounded corners. Everything is monochrome; only the focused workspace and alert
+states light up.
 
-To add modules (clock, battery, network), edit `waybar/config` and style in
-`waybar/style.css`.
+- left = `sway/mode` (peach block, only visible in `resize` / `gaps` mode) +
+  `sway/workspaces` - the focused workspace renders as a bright `●`, the rest
+  stay dim numbers
+- center = `clock`, `Friday 15:01`; click toggles the full date, hover = calendar
+- right = `battery`, `pulseaudio`, `network`, `tray` - **icon only**, the
+  percentages and SSID live in the tooltips. Scroll on the volume icon to adjust,
+  click to mute.
+
+No window title on the bar. Icons are Nerd Font glyphs - the file assumes
+**FiraCode Nerd Font**.
+
+> Reload after editing: `pkill -SIGUSR2 waybar` restarts it, but Sway owns the
+> process (`swaybar_command waybar`), so `swaymsg reload` / `Alt+Shift+C` is the
+> reliable way to bring it back.
 
 ---
 

@@ -67,10 +67,14 @@ creating or deleting one requires `./install.sh --stow-only`.**
   `fish/config.fish`.** It used to live in `conf.d/20_sway_linux.fish`, where it
   cut off `conf.d` sourcing midway and left sway's children with a truncated
   environment.
-- `install.sh` stows a `tmux` package that does not exist in this tree (it warns
-  and skips). `FEATURES.md` still references `tmux/.tmux.conf.local`.
+- **A package whose `~/.config/<pkg>` is itself a symlink to the repo directory
+  breaks `--stow-only` for every package after it.** stow then sees its own files
+  as "existing non-link targets", aborts, and `set -euo pipefail` kills the run
+  mid-loop, silently leaving later packages unlinked. The target must be a real
+  directory holding stow's per-file links. `helix` was in this state until
+  2026-09-18 and it was swallowing `sway`, `waybar`, `i3` and `tmux`.
 - The Linux extras assume the repo is at `~/dotfiles`, not `~/works/dotfiles`:
-  `sway/config:272` hardcodes `/home/peter/dotfiles/scripts/agent-float-toggle.sh`
+  `sway/config:305` hardcodes `/home/peter/dotfiles/scripts/agent-float-toggle.sh`
   and `systemd/user/obsidian-sync.service` uses `%h/dotfiles/scripts/...`.
 - `fish/conf.d/local.fish` holds machine-local secrets and is gitignored. Change
   the tracked template `local.fish.example`, never `local.fish`.

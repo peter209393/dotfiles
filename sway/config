@@ -65,6 +65,39 @@ output * bg /usr/share/backgrounds/sway/new-zealand-wallpaper.jpg fill
 # You can also configure each device individually.
 # Read `man 5 sway-input` for more information about this section.
 
+### 窗口间距与边框
+#
+# 窗口之间 8px、屏幕边缘 4px 的留白(`man 5 sway` 里的 gaps)
+gaps inner 8
+gaps outer 4
+# 细边框,配合间距更容易分辨焦点;不想要边框就改回 default_border none
+default_border pixel 2
+default_floating_border pixel 2
+# 屏幕上只有一个窗口时不画边框(想要"独占时也留白"就把 smart_gaps 那行删掉)
+smart_borders on
+# smart_gaps on
+
+# Catppuccin Mocha 窗口边框(和 alacritty / ghostty / waybar 同一套色)
+#                         边框      背景      文字      指示条    子容器边框
+client.focused           #cba6f7   #cba6f7   #1e1e2e   #b4befe   #cba6f7
+client.focused_inactive  #45475a   #45475a   #cdd6f4   #45475a   #45475a
+client.unfocused         #313244   #313244   #6c7086   #313244   #313244
+client.urgent            #f38ba8   #f38ba8   #1e1e2e   #f38ba8   #f38ba8
+client.placeholder       #313244   #1e1e2e   #cdd6f4   #313244   #313244
+client.background        #1e1e2e
+
+# $mod+Shift+g 进入间距模式:j/k(或 -/+)调整,0 关掉,Esc 退出
+mode "gaps" {
+    bindsym k gaps inner current plus 2
+    bindsym j gaps inner current minus 2
+    bindsym plus gaps inner current plus 2
+    bindsym minus gaps inner current minus 2
+    bindsym 0 gaps inner current set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+g mode "gaps"
+
 ### Key bindings
 #
 # Basics:
@@ -165,7 +198,7 @@ output * bg /usr/share/backgrounds/sway/new-zealand-wallpaper.jpg fill
     bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
-    # bindsym $mod+a focus parent
+    bindsym $mod+a focus parent
 #
 # Scratchpad:
 #
@@ -241,7 +274,7 @@ exec_always fcitx5 -d
 exec_always blueman-applet &
 exec_always nm-applet &
 # pgrep 守卫:无论 reload 多少次,只保证一个实例在跑(voice-type 自身无单实例保护)
-exec_always sh -c 'pgrep -x voice-type >/dev/null || ZAI_API_TOKEN=$ZAI_API_TOKEN VT_ARK_API_KEY=$VT_ARK_API_KEY voice-type'
+exec_always sh -c 'pgrep -x voice-type >/dev/null || ZAI_API_TOKEN=$ZAI_API_TOKEN VT_ARK_PLAN_API_KEY=$VT_ARK_PLAN_API_KEY VT_ARK_API_KEY=$VT_ARK_API_KEY voice-type'
 exec_always vicinae server
 exec_always --no-startup-id dunst
 

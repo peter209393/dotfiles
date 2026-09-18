@@ -32,3 +32,15 @@ render = true
 
 # [editor.lsp] 手动控制补全弹窗(觉得太吵可开):
 # auto-signature-help = false
+
+# ===== 键位 =====
+[keys.normal]
+"C-]" = "goto_definition"   # ctrl+] 跳转定义(等同 g d;返回用默认的 C-o)
+"0" = "goto_line_start"     # 0 跳到行首;数字参数不受影响(10j 仍然有效)
+
+# 关于 dd 删整行:helix 25.07 的 d 是"立即删除光标字符/选区",没有 vim 式
+# 操作符等待。键映射无法让 d 既立即生效又识别 dd 前缀,两者互斥:
+#   - 保持 d 不变(当前方案):删整行用 xd(x 选中整行, d 删除)
+#   - 想要 vim 式 dd:取消下面两行注释,代价是单按 d 会等待第二个键
+# [keys.normal.d]
+# d = ["extend_line", "delete_selection"]
