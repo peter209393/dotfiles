@@ -1,0 +1,6 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export NODE_OPTIONS:\x2d\x2duse\x2dsystem\x2dca
+SETUVAR __fish_initialized:4300
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fish_greeting:

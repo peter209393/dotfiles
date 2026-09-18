@@ -1,0 +1,34 @@
+# Helix 配置
+# 文档: https://docs.helix-editor.com/configuration.html
+# 运行时切换主题: :theme <Tab>   持久化就写下面的 theme =
+
+# ===== 主题 =====
+# 内置 base16 系:
+#   base16_default_dark   经典 16 色暗色
+#   base16_default_light  亮色
+#   base16_terminal       直接用终端配色(随终端主题变)
+#   base16_transparent    暗色 + 透明背景(配 sway/合成器)
+theme = "base16_transparent"
+
+# ===== 编辑器 =====
+[editor]
+true-color = true        # 24bit 真彩色
+bufferline = "multiple"  # 多文件时顶部显示 buffer 标签
+cursorline = true        # 高亮光标行
+line-number = "relative"  # 相对行号(配合 5j / 3k 跳转)
+shell = ["fish", "-l", "-c"]  # :sh 等命令走登录 fish(继承完整环境变量)
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+right = ["version-control", "diagnostics", "selections", "position", "file-encoding", "file-line-ending"]
+
+[editor.indent-guides]
+render = true
+
+# [editor.lsp] 手动控制补全弹窗(觉得太吵可开):
+# auto-signature-help = false

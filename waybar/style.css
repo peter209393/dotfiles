@@ -1,0 +1,14 @@
+* {
+  font-family: monospace;
+  font-size: 10px;
+}
+
+#waybar {
+  background: #1e1e2e;
+  color: #cdd6f4;
+}
+
+#clock, #battery, #network, #cpu, #memory {
+  padding: 0 10px;
+}
+

@@ -1,0 +1,11 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["sway/workspaces", "sway/window"],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "tray"
+  ]
+}
+

@@ -1,0 +1,8 @@
+[Unit]
+Description=Obsidian vault <-> Google Drive 双向同步 (rclone bisync)
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/scripts/obsidian-gdrive-sync.sh
+# 网络波动/授权过期时安静失败,下次 timer 再试
+SuccessExitStatus=0 1

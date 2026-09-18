@@ -1,0 +1,11 @@
+[Unit]
+Description=定时双向同步 Obsidian vault 与 Google Drive
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=5min
+AccuracySec=30s
+Unit=obsidian-sync.service
+
+[Install]
+WantedBy=timers.target

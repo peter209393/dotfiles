@@ -1,0 +1,15 @@
+# ignore runtime and secrets
+**/cache/
+**/Cache/
+**/tmp/
+**/secrets/
+**/ssh/
+*.sock
+*.pid
+*.db
+fish/conf.d/local.fish
+
+# 工具生成的隐藏目录/文件(.claude/worktrees 等)
+/.claude/
+/.DS_Store
+
