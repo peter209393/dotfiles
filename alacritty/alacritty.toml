@@ -76,7 +76,7 @@ color = "#F5E0DC"
 
 [window]
 dynamic_padding = true
-opacity = 0.8
+opacity = 1
 startup_mode = "Windowed"
 
 [selection]

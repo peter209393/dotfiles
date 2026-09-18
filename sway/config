@@ -276,7 +276,7 @@ exec_always fcitx5 -d
 # 网络托盘图标已去掉(waybar 的 WiFi 字形点击即开 nm-connection-editor,命令行用 nmtui)
 # exec_always nm-applet &
 # pgrep 守卫:无论 reload 多少次,只保证一个实例在跑(voice-type 自身无单实例保护)
-exec_always sh -c 'pgrep -x voice-type >/dev/null || ZAI_API_TOKEN=$ZAI_API_TOKEN VT_ARK_PLAN_API_KEY=$VT_ARK_PLAN_API_KEY VT_ARK_API_KEY=$VT_ARK_API_KEY voice-type'
+#exec_always sh -c 'pgrep -x voice-type >/dev/null || ZAI_API_TOKEN=$ZAI_API_TOKEN VT_ARK_PLAN_API_KEY=$VT_ARK_PLAN_API_KEY VT_ARK_API_KEY=$VT_ARK_API_KEY voice-type'
 exec_always vicinae server
 exec_always --no-startup-id dunst
 
