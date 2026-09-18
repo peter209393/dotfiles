@@ -120,7 +120,7 @@ mode = "~Alt"
 mods = "Shift"
 
 [font]
-size = 15.0
+size = 16.0
 
 [font.bold]
 family = "FiraCode Nerd Font"

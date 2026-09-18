@@ -5,7 +5,7 @@
 # --- 字体(机器上安装的是 FiraCode Nerd Font,名字必须完全一致否则会回退默认字体) ---
 font-family = FiraCode Nerd Font
 font-family = PingFang SC   # 中文统一走苹方，避免 CoreText 随机兜底导致大小不一
-font-size = 14
+font-size = 16
 font-feature = ss01   # 直杠 % -> 打叉
 font-feature = ss02   # 直杠 * -> 打叉
 font-feature = cv30   # 更直的小写 f / 4
