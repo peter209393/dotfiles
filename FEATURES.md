@@ -381,7 +381,8 @@ Config in `alacritty/alacritty.toml`:
   (`/usr/share/ghostty/themes/<Name>`), so both terminals render the same
   palette as long as the two configs name the same theme.
 - **Font:** FiraCode Nerd Font, size **15**.
-- **Window:** fully opaque (`opacity = 1`), beam cursor (thickness 0.3), 5000
+- **Window:** 8px base padding with `dynamic_padding` spreading leftover
+  pixels, fully opaque (`opacity = 1`), beam cursor (thickness 0.3), 5000
   scrollback lines, selection saves to clipboard.
 - **Key bindings:** `Ctrl+Shift+C/V` copy/paste, `Ctrl+Cmd+B` send `\e\b`,
   `Ctrl+Cmd+Q` quit, `Ctrl+=/-/0` font size, `F11` fullscreen, `Ctrl+L` clear.
