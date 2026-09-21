@@ -503,6 +503,20 @@ via the tracked `fcitx5/config`:
 fcitx5 options of list type need that section-with-numeric-keys form - a plain
 `DisabledAddons=notificationitem` under `[Behavior]` parses but does nothing.
 
+**Tray icons are recoloured monochrome** by `scripts/sni-mono-proxy.py`. Tray
+apps (Telegram & co.) send their icon as a raw ARGB pixmap over the
+StatusNotifierItem D-Bus protocol - no icon name, so neither the GTK icon theme
+nor CSS can touch it. The proxy owns `org.kde.StatusNotifierWatcher` before
+Waybar starts (Sway runs `scripts/waybar-mono-tray.sh` as `swaybar_command`,
+which launches the proxy then execs waybar), proxies every registered tray item
+on its own bus connection, and rewrites only the pixmap: luminance becomes
+alpha, RGB becomes the bar's text colour. Menus, clicks and unread-badge icon
+updates are forwarded untouched. Needs `python-dbus-next`; if the proxy fails,
+Waybar still starts - the tray just stays colourful. One D-Bus connection per
+tray item is mandatory: GLib clients resolve the well-known name to its unique
+name before sending, so sharing one connection would make `/StatusNotifierItem`
+and `/MenuBar` ambiguous across apps.
+
 Icons are Nerd Font glyphs and the file assumes **FiraCode Nerd Font**. They are
 written as JSON `\u` escapes (surrogate pairs for the `U+F0xxx` Material range),
 not as literal characters - literal PUA glyphs are easy to lose to an editor or a
@@ -510,8 +524,8 @@ shell heredoc, and a lost glyph shows up as a silently empty module rather than
 an error.
 
 > Reload after editing: `pkill -SIGUSR2 waybar` restarts it, but Sway owns the
-> process (`swaybar_command waybar`), so `swaymsg reload` / `Alt+Shift+C` is the
-> reliable way to bring it back.
+> process (`swaybar_command` -> `scripts/waybar-mono-tray.sh`), so
+> `swaymsg reload` / `Alt+Shift+C` is the reliable way to bring it back.
 
 ---
 
