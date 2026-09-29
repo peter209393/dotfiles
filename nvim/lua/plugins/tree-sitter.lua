@@ -19,6 +19,7 @@ return {
 			"bash",
 			"css",
 			"kotlin",
+			"latex",
 		}
 
 		local patterns = {
@@ -36,6 +37,7 @@ return {
 			"bash",
 			"css",
 			"kotlin",
+			"latex",
 		}
 
 		-- nvim-treesitter main branch requires the tree-sitter CLI to build parsers.

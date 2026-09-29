@@ -175,3 +175,6 @@ if test (uname -s) = Linux
     set TTY1 (tty)
     [ "$TTY1" = "/dev/tty1" ] && exec sway
 end
+
+# Added by get-aspire-cli.sh
+fish_add_path $HOME/.aspire/bin

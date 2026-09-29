@@ -63,7 +63,6 @@ return {
 				-- Find references for the word under your cursor.
 				map("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
 
-
 				-- Jump to the implementation of the word under your cursor.
 				--  Useful when your language has ways of declaring types without an actual implementation.
 				map("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
@@ -209,6 +208,7 @@ return {
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		local servers = {
+			texlab = {},
 			zls = {},
 			bashls = {},
 			marksman = {},
