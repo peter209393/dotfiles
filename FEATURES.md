@@ -114,7 +114,7 @@ Every `*.fish` file in `conf.d/` is sourced at shell startup.
 | `asdf.fish` | ASDF version manager shims |
 | `foundry.fish` | Foundry (Solidity) `~/.foundry/bin` |
 | `rustup.fish` | Rust cargo env |
-| `z.fish` | `z` directory jumper (jethrokuan/z, vendored) |
+| `z.fish` | `z` directory jumper (jethrokuan/z, vendored); data path + `$HOME` exclusion derived per-session, never stored in `fish_variables` (multi-machine safe) |
 | `fzf.fish` | fzf.fish keybindings + uninstall handler |
 | `keybinds.fish` | Vim-style key bindings (see 1c) |
 | `claude.fish` | Adds `~/.local/bin` to PATH |
