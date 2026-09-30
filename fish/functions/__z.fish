@@ -1,4 +1,7 @@
 function __z -d "Jump to a recent directory."
+    if test -z "$Z_DATA"
+        return 1
+    end
     function __print_help -d "Print z help."
         printf "Usage: $Z_CMD  [-celrth] string1 string2...\n\n"
         printf "         -c --clean    Removes directories that no longer exist from $Z_DATA\n"
