@@ -2,7 +2,7 @@
 
 **简体中文** | [English](README.md)
 
-个人 dotfiles 仓库,包含 **Fish**、**Neovim**、**Helix**、**Ghostty**、**Alacritty**、**i3 / Sway / Waybar** 的配置,以及 **Obsidian 同步**、**agent 漂浮窗**等辅助脚本。
+个人 dotfiles 仓库,包含 **Fish**、**Neovim**、**Helix**、**Ghostty**、**Alacritty**、**i3 / Sway / Hyprland / Waybar / Noctalia** 的配置,以及 **Obsidian 同步**、**agent 漂浮窗**等辅助脚本。
 
 支持 **macOS** 和 **Linux**(Arch / Debian / Ubuntu / Fedora)。一条命令即可在空白机器上完成全部安装。
 
@@ -25,7 +25,7 @@ cd ~/works/dotfiles
 
 1. **系统包** — macOS 用 Homebrew,Linux 用发行版自带包管理器
 2. **Oh My Tmux!** — 克隆上游到 `~/.tmux`,软链 `~/.tmux.conf`
-3. **Stow 软链接** — `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/` 全部链接到 `~/.config/`
+3. **Stow 软链接** — `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/ hypr/ noctalia/` 全部链接到 `~/.config/`
 4. **Fish 插件** — Fisher + 4 个插件(写进 `fish_plugins`;部分插件文件已 vendored 在仓库内)
 5. **Neovim 插件** — lazy.nvim 首次启动自动拉取
 6. **环境变量文件** — `conf.d/_99_dotfiles_env.fish`(代理 / fcitx)
@@ -68,6 +68,8 @@ dotfiles/
 ├── i3/                       # i3 窗口管理器配置
 ├── sway/                     # Sway 窗口管理器配置
 ├── waybar/                   # Waybar 状态栏(config + style.css)
+├── hypr/                     # Hyprland 配置(hyprland.conf,1.5x HiDPI 缩放)
+├── noctalia/                 # Noctalia shell settings.toml(stow 到 ~/.local/state/noctalia,不是 ~/.config)
 ├── scripts/                  # 独立脚本
 │   ├── agent-float-toggle.sh   # sway Alt+G 漂浮 agent 聊天窗(仅 Linux)
 │   └── obsidian-gdrive-sync.sh # Obsidian vault ↔ Google Drive 双向同步(rclone bisync)
@@ -112,7 +114,7 @@ brew install --cask alacritty ghostty raycast visual-studio-code iterm2 font-fir
 **Arch Linux:**
 
 ```bash
-sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
+sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ```
 
@@ -143,10 +145,13 @@ ln -sf .tmux/.tmux.conf ~/.tmux.conf
 ```bash
 cd ~/works/dotfiles
 mkdir -p ~/.config
-for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr; do
     mkdir -p ~/.config/$pkg
     stow --restow --target=$HOME/.config/$pkg $pkg
 done
+# 例外:noctalia 的 settings.toml 在 state 目录,不在 ~/.config
+mkdir -p ~/.local/state/noctalia
+stow --restow --target=$HOME/.local/state/noctalia noctalia
 ```
 
 ### 4. Fish 插件
@@ -221,9 +226,9 @@ voice-type 令牌同样从这里导出(环境变量)。
 | 组件 | macOS | Linux |
 |---|---|---|
 | 包管理器 | Homebrew | pacman / apt / dnf |
-| 窗口管理器 | Raycast | i3 / Sway |
-| 状态栏 | macOS 菜单栏 | Waybar |
-| 终端 | Alacritty / Ghostty | Alacritty / Ghostty(Arch) |
+| 窗口管理器 | Raycast | i3 / Sway / Hyprland |
+| 状态栏 | macOS 菜单栏 | Waybar / Noctalia |
+| 终端 | Alacritty / Ghostty | Foot / Alacritty / Ghostty |
 | Fish 路径 | `/opt/homebrew/bin/fish`(arm64) | `/usr/bin/fish` |
 | Rust | `rustup-init`(brew) | `rustup`(脚本) |
 | 附加脚本 | — | agent 漂浮窗、Obsidian 同步 |
@@ -262,7 +267,7 @@ nvim +":Mason" +qa
 
 ```bash
 cd ~/works/dotfiles
-for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr noctalia; do
     stow --delete --target=$HOME/.config/$pkg $pkg
 done
 

@@ -136,7 +136,7 @@ install_linux_packages() {
     local pkgs=()
     case "$LINUX_DISTRO" in
         arch)
-            pkgs=(stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman)
+            pkgs=(stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman)
             log "使用 pacman 安装"
             # 先批量装;失败(例如某包依赖升级会破坏其它已装包,如 emacs vs tree-sitter)则逐个装,
             # 避免一个依赖冲突阻塞整批安装。
@@ -221,10 +221,12 @@ stow_packages() {
         [i3]="$HOME/.config/i3"
         [sway]="$HOME/.config/sway"
         [waybar]="$HOME/.config/waybar"
+        [hypr]="$HOME/.config/hypr"
+        [noctalia]="$HOME/.local/state/noctalia"
         [tmux]="$HOME"
     )
 
-    for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar tmux; do
+    for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr noctalia tmux; do
         if [ -d "$pkg" ]; then
             local target="${targets[$pkg]}"
             log "stow $pkg -> $target"

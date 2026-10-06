@@ -2,7 +2,7 @@
 
 [简体中文](readme.zh-CN.md) | **English**
 
-Personal dotfiles for **Fish**, **Neovim**, **Ghostty**, **Alacritty**, **i3 / Sway / Waybar**, plus helper scripts for **Obsidian sync** and a **floating agent window**.
+Personal dotfiles for **Fish**, **Neovim**, **Ghostty**, **Alacritty**, **i3 / Sway / Hyprland / Waybar / Noctalia**, plus helper scripts for **Obsidian sync** and a **floating agent window**.
 
 Works on **macOS** and **Linux** (Arch / Debian / Ubuntu / Fedora). One command sets up a blank machine.
 
@@ -25,7 +25,7 @@ The script does:
 
 1. **System packages** — Homebrew on macOS; the distro package manager on Linux.
 2. **Oh My Tmux!** — clones upstream into `~/.tmux` and symlinks `~/.tmux.conf`.
-3. **Stow symlinks** — links `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/` into `~/.config/`.
+3. **Stow symlinks** — links `fish/ nvim/ helix/ alacritty/ ghostty/ fcitx5/ i3/ sway/ waybar/ hypr/ noctalia/` into `~/.config/`.
 4. **Fish plugins** — Fisher plus 4 plugins (written to `fish_plugins`; some plugin files are vendored in this repo).
 5. **Neovim plugins** — lazy.nvim fetches them on first start.
 6. **Env file** — `conf.d/_99_dotfiles_env.fish` (proxy / fcitx).
@@ -68,6 +68,8 @@ dotfiles/
 ├── i3/                       # i3 window manager config
 ├── sway/                     # Sway window manager config
 ├── waybar/                   # Waybar status bar (config + style.css)
+├── hypr/                     # Hyprland config (hyprland.conf, 1.5x HiDPI scaling)
+├── noctalia/                 # Noctalia shell settings.toml (stowed to ~/.local/state/noctalia, not ~/.config)
 ├── scripts/                  # standalone scripts
 │   ├── agent-float-toggle.sh   # sway Alt+G floating agent chat window (Linux only)
 │   └── obsidian-gdrive-sync.sh # Obsidian vault <-> Google Drive two-way sync (rclone bisync)
@@ -91,7 +93,7 @@ dotfiles/
 
 ### Linux (Arch / Debian / Fedora)
 
-**Packages:** almost the same list as macOS, minus `asdf rustup-init`; the distro adds `dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman` (Arch also installs `alacritty ghostty`). Rust comes from the `rustup` script; on Debian, `fd` is symlinked from `fdfind` and `eza` is downloaded from GitHub releases. [`install.sh`](install.sh) is the source of truth.
+**Packages:** almost the same list as macOS, minus `asdf rustup-init`; the distro adds `dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman` (Arch also installs `alacritty ghostty hyprland foot noctalia`). Rust comes from the `rustup` script; on Debian, `fd` is symlinked from `fdfind` and `eza` is downloaded from GitHub releases. [`install.sh`](install.sh) is the source of truth.
 
 ---
 
@@ -112,7 +114,7 @@ brew install --cask alacritty ghostty raycast visual-studio-code iterm2 font-fir
 **Arch Linux:**
 
 ```bash
-sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
+sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ```
 
@@ -143,10 +145,13 @@ ln -sf .tmux/.tmux.conf ~/.tmux.conf
 ```bash
 cd ~/works/dotfiles
 mkdir -p ~/.config
-for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr; do
     mkdir -p ~/.config/$pkg
     stow --restow --target=$HOME/.config/$pkg $pkg
 done
+# Exception: noctalia's settings.toml lives in the state dir, not ~/.config
+mkdir -p ~/.local/state/noctalia
+stow --restow --target=$HOME/.local/state/noctalia noctalia
 ```
 
 ### 4. Fish plugins
@@ -222,9 +227,9 @@ and fill in real values; the sway voice-type tokens are exported from here too
 | Component | macOS | Linux |
 |---|---|---|
 | Package manager | Homebrew | pacman / apt / dnf |
-| Window management | Raycast | i3 / Sway |
-| Status bar | macOS menu bar | Waybar |
-| Terminal | Alacritty / Ghostty | Alacritty / Ghostty (Arch) |
+| Window management | Raycast | i3 / Sway / Hyprland |
+| Status bar | macOS menu bar | Waybar / Noctalia |
+| Terminal | Alacritty / Ghostty | Foot / Alacritty / Ghostty |
 | Fish path | `/opt/homebrew/bin/fish` (arm64) | `/usr/bin/fish` |
 | Rust | `rustup-init` (brew) | `rustup` (script) |
 | Extra scripts | — | agent float window, Obsidian sync |
@@ -263,7 +268,7 @@ nvim +":Mason" +qa
 
 ```bash
 cd ~/works/dotfiles
-for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar; do
+for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr noctalia; do
     stow --delete --target=$HOME/.config/$pkg $pkg
 done
 
