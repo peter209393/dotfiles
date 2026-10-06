@@ -27,6 +27,7 @@ macos-titlebar-style = tabs
 
 # --- 按键 / 剪贴板 ---
 macos-option-as-alt = true
+keybind = alt+n=new_window
 copy-on-select = clipboard
 clipboard-paste-protection = false
 confirm-close-surface = false
