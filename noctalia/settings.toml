@@ -1,9 +1,5 @@
 config_version = 14
 
-[shell]
-app_icon_colorize = true
-app_icon_color = "#ffffff"
-
 [bar.default]
 position = "top"
 reserve_space = true
@@ -44,3 +40,14 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_session_buttons = true
         show_unlock_hint = true
         show_weather = true
+
+[shell]
+app_icon_color = "#ffffff"
+app_icon_colorize = true
+
+[theme]
+builtin = "Noctalia"
+community_palette = "Oxocarbon"
+mode = "dark"
+source = "builtin"
+wallpaper_scheme = "m3-content"
