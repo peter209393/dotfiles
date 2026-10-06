@@ -92,9 +92,7 @@ Java 17, Android SDK on macOS; Linuxbrew, snap, flatpak on Linux).
   and `?` -> `_crush_query` (macOS only - asks the Crush AI a question).
 - **Aliases:** `vim`/`vi` -> `nvim`; `cat` -> `bat`; `ls`/`ll`/`la`/`tree` ->
   `eza` variants; `fd` -> `fdfind` fallback on Ubuntu.
-- **Tools:** `thefuck` (alias `f`), `zoxide` (smart `cd`), `rt` (reload config).
-- **Auto-ls:** every `cd` runs `eza -la --git` automatically
-  (`__auto_ls_after_cd`).
+- **Tools:** `thefuck` (alias `f`), `zoxide` (smart `cd` via `z`), `rt` (reload config).
 - **Lazy fzf:** fzf keybindings load on first prompt (faster startup).
 - **PATH extras:** `bun`, `pnpm`, Antigravity CLI, Qwen Code.
 
@@ -206,9 +204,6 @@ fordrunrpc bind <name|url>    # pin current project to an RPC
 fordrunrpc unbind             # remove project pin
 fordrunrpc add <name> <url>   # add a named RPC
 ```
-
-`__fordrunrpc_auto` switches RPC automatically whenever you `cd` into a project
-that contains a `.fordrunrpc` file.
 
 **Prompt** (`fish_prompt` + `fish_right_prompt`): left shows
 `user@host path ❯❯❯` (red `#` on root); right shows exit status + rich git

@@ -310,7 +310,7 @@ bass 'export MY_VAR=value; echo $MY_VAR'
 
 ### `z`
 
-Directory jumping tool (zoxide/jethrokuan/z). Jump to frequently used directories:
+Directory jumping tool (zoxide). Jump to frequently used directories:
 
 ```bash
 z ~/projects/myproject

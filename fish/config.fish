@@ -95,6 +95,9 @@ if status is-interactive
     end
     bind -e \cl
 
+    if command -q vis
+        alias v vis
+    end
     # fd / bat / eza 三个平台工具(两平台,优先 Linux 替代)
     if command -q fdfind
         alias fd fdfind
@@ -102,7 +105,7 @@ if status is-interactive
         alias fd fd
     end
     if command -q bat
-        alias cat "bat --paging=auto"
+        alias cat "bat --paging=auto -p"
     end
     if command -q eza
         alias ls eza
@@ -129,19 +132,6 @@ if status is-interactive
     end
     alias vim=nvim
     alias vi=nvim
-
-    # ===== cd 后自动 ls (仅交互式 shell,两平台都生效) =====
-    # 注意:不要加 --git —— 那会在每次 cd 时同步跑一次 git status,
-    # 大仓库/未跟踪文件多时会让 cd 卡住(需 Ctrl+C 才能继续)。
-    function __auto_ls_after_cd --on-variable PWD
-        if status is-interactive
-            if command -v eza >/dev/null 2>&1
-                eza -la --group-directories-first
-            else
-                ls -la
-            end
-        end
-    end
 end
 
 # ===== 懒加载 fzf =====
@@ -171,7 +161,8 @@ end
 # 放在 config.fish 最末尾:确保上面所有 conf.d + config 的环境(PATH/环境变量)
 # 全部加载完再 exec sway,否则 sway 及其子进程(GUI app、直接 exec 的程序)
 # 只能拿到残缺环境(原 conf.d/20_sway_linux.fish 会在 conf.d 中途截断启动)
-if test (uname -s) = Linux
+# 仅裸 TTY 登录才自动启动;经 ly 等 DM 启动会话时 XDG_SESSION_DESKTOP 已设置,跳过
+if test (uname -s) = Linux; and test -z "$XDG_SESSION_DESKTOP"
     set TTY1 (tty)
     [ "$TTY1" = "/dev/tty1" ] && exec sway
 end
