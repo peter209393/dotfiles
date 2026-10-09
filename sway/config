@@ -269,8 +269,8 @@ input * {
     repeat_rate 33
 }
 
-output * adaptive_sync on
-output * render_bit_depth 10
+output * adaptive_sync off
+output * render_bit_depth 8
 
 exec_always fcitx5 -d
 # 蓝牙托盘图标已去掉(蓝牙本身照常工作,需要图形界面时手动开 blueman-manager)

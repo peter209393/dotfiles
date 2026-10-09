@@ -471,8 +471,8 @@ Config in `sway/config`:
   already covers the network. Bluetooth and NetworkManager themselves are
   untouched: `blueman-manager`, `nm-connection-editor` (click the Waybar WiFi
   glyph) and `nmtui` all still work.
-- `Ctrl` remapped to CapsLock (`xkb_options ctrl:nocaps`); adaptive sync + 10-bit
-  color on; `DP-1` scaled 1.5x.
+- `Ctrl` remapped to CapsLock (`xkb_options ctrl:nocaps`); adaptive sync and 10-bit
+  color off (both caused whole-screen stalls on the Intel eDP panel); `DP-1` scaled 1.5x.
 - Bar = **Waybar** (bottom). Android Emulator floats.
 
 > On Linux, **tty1 auto-launches Sway** from the tail of `fish/config.fish`.
