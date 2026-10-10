@@ -13,7 +13,7 @@ import = ["~/.config/alacritty/themes/carbonfox.toml"]
 dynamic_padding = true
 # 基准内边距(像素);dynamic_padding 会在此基础上再摊入剩余空间
 padding = { x = 8, y = 8 }
-opacity = 1
+opacity = 0.8
 startup_mode = "Windowed"
 
 [selection]
@@ -122,7 +122,7 @@ mode = "~Alt"
 mods = "Shift"
 
 [font]
-size = 16.0
+size = 18.0
 
 [font.bold]
 family = "FiraCode Nerd Font"
