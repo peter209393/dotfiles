@@ -100,14 +100,17 @@ app_icon_color = "#ffffff"
 app_icon_colorize = true
 
 [theme]
-builtin = "Ayu"
+builtin = "Dracula"
 community_palette = "Ayu Blue"
 mode = "dark"
 source = "builtin"
-wallpaper_scheme = "vibrant"
+wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
 
 [wallpaper.last]
-path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
+path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+
+[wallpaper.monitors.DP-1]
+path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
