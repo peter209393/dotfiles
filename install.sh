@@ -136,7 +136,7 @@ install_linux_packages() {
     local pkgs=()
     case "$LINUX_DISTRO" in
         arch)
-            pkgs=(stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman)
+            pkgs=(stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip hyprpolkitagent brightnessctl xdg-desktop-portal-hyprland grim slurp ly ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman)
             log "使用 pacman 安装"
             # 先批量装;失败(例如某包依赖升级会破坏其它已装包,如 emacs vs tree-sitter)则逐个装,
             # 避免一个依赖冲突阻塞整批安装。
@@ -225,13 +225,17 @@ stow_packages() {
         [noctalia]="$HOME/.local/state/noctalia"
         [tmux]="$HOME"
     )
+    # 注意:ly 的配置在 /etc/ly(root 所有),stow 覆盖不到,由 setup_ly 单独部署
 
     for pkg in fish nvim helix alacritty ghostty fcitx5 i3 sway waybar hypr noctalia tmux; do
         if [ -d "$pkg" ]; then
             local target="${targets[$pkg]}"
+            # fish_variables 由 fish 原子重写(set -U 后即变成普通文件),纳入链接必卡死 stow
+            local ignore=()
+            [ "$pkg" = fish ] && ignore=(--ignore='^fish_variables$')
             log "stow $pkg -> $target"
             mkdir -p "$target"
-            stow --restow --target="$target" "$pkg"
+            stow --restow --target="$target" "${ignore[@]}" "$pkg"
         else
             warn "$pkg 目录不存在,跳过"
         fi
@@ -329,6 +333,23 @@ EOF
 }
 
 # ---------------------------------------------------------------------------
+# 2c. ly 显示管理器(目标在 /etc,需要 root,stow 无法覆盖;软链接保持单一来源)
+# ---------------------------------------------------------------------------
+setup_ly() {
+    if [ "$PLATFORM" != "linux" ] || ! have ly-dm; then
+        return 0
+    fi
+
+    log "配置 ly 显示管理器"
+    if [ -f /etc/ly/config.ini ] && [ ! -L /etc/ly/config.ini ]; then
+        sudo cp -a /etc/ly/config.ini /etc/ly/config.ini.orig || warn "备份默认配置失败"
+    fi
+    sudo mkdir -p /etc/ly || return 1
+    sudo ln -sf "$REPO_ROOT/ly/config.ini" /etc/ly/config.ini || warn "ly 配置链接失败"
+    sudo systemctl enable ly@tty2.service >/dev/null 2>&1 || warn "ly@tty2 服务启用失败"
+}
+
+# ---------------------------------------------------------------------------
 # 主流程
 # ---------------------------------------------------------------------------
 main() {
@@ -340,6 +361,7 @@ main() {
         install_fish_plugins
         install_nvim_plugins
         write_env_extras
+        setup_ly
         log "完成"
         exit 0
     fi
@@ -357,6 +379,7 @@ main() {
     install_fish_plugins
     install_nvim_plugins
     write_env_extras
+    setup_ly
 
     # 默认文件管理器(Linux)
     if [ "$PLATFORM" = "linux" ] && have thunar && have xdg-mime; then

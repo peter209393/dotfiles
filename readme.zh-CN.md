@@ -29,7 +29,7 @@ cd ~/works/dotfiles
 4. **Fish 插件** — Fisher + 4 个插件(写进 `fish_plugins`;部分插件文件已 vendored 在仓库内)
 5. **Neovim 插件** — lazy.nvim 首次启动自动拉取
 6. **环境变量文件** — `conf.d/_99_dotfiles_env.fish`(代理 / fcitx)
-7. **Linux 附加** — Thunar 设为默认文件管理器;可选安装 Vicinae 启动器
+7. **Linux 附加** — Thunar 设为默认文件管理器;可选安装 Vicinae 启动器;部署 `ly/config.ini` 到 `/etc/ly/config.ini`(sudo 软链)并启用 `ly@tty2.service`(tty2 登录界面)
 
 ### 参数
 
@@ -69,6 +69,7 @@ dotfiles/
 ├── sway/                     # Sway 窗口管理器配置
 ├── waybar/                   # Waybar 状态栏(config + style.css)
 ├── hypr/                     # Hyprland 配置(hyprland.conf,1.5x HiDPI 缩放)
+├── ly/                       # ly 显示管理器配置(install.sh 部署到 /etc/ly/config.ini;登录界面在 tty2)
 ├── noctalia/                 # Noctalia shell settings.toml(stow 到 ~/.local/state/noctalia,不是 ~/.config)
 ├── scripts/                  # 独立脚本
 │   ├── agent-float-toggle.sh   # sway Alt+G 漂浮 agent 聊天窗(仅 Linux)
@@ -114,7 +115,7 @@ brew install --cask alacritty ghostty raycast visual-studio-code iterm2 font-fir
 **Arch Linux:**
 
 ```bash
-sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
+sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip hyprpolkitagent brightnessctl xdg-desktop-portal-hyprland grim slurp ly ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ```
 
@@ -211,7 +212,14 @@ systemctl --user enable --now obsidian-sync.timer
 
 ### Agent 漂浮窗(仅 Linux / sway)
 
-`sway/config` 里 `Alt+G` 绑定 `scripts/agent-float-toggle.sh`:未启动则拉起 `pi`,已启动则在 scratchpad 显示/隐藏。脚本路径为绝对路径,仓库位置不同需自行调整。
+`sway/config` 里 `Alt+G` 绑定 `scripts/agent-float-toggle.sh`:未启动则拉起 `pi`,已启动则在 scratchpad 显示/隐藏。脚本路径为绝对路径,仓库位置不同需自行调整。`hypr/hyprland.conf` 用 `special:agent` 工作区绑定了同一按键。
+
+### 显示管理器:ly(仅 Linux)
+
+`install.sh` 把 `ly/config.ini` 软链到 `/etc/ly/config.ini`(原厂配置保留为
+`config.ini.orig`),并启用 `ly@tty2.service`。登录界面用方向键选一次
+**Hyprland** 即可(`save = true` 会记住)。裸 tty1 登录仍从 `fish/config.fish`
+末尾自动启动 sway;ly 会话会设置 `XDG_SESSION_DESKTOP`,自动跳过该回退。
 
 ### 机密文件(不入库)
 

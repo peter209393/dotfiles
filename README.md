@@ -29,7 +29,7 @@ The script does:
 4. **Fish plugins** — Fisher plus 4 plugins (written to `fish_plugins`; some plugin files are vendored in this repo).
 5. **Neovim plugins** — lazy.nvim fetches them on first start.
 6. **Env file** — `conf.d/_99_dotfiles_env.fish` (proxy / fcitx).
-7. **Linux extras** — sets Thunar as the default file manager; optional Vicinae launcher.
+7. **Linux extras** — sets Thunar as the default file manager; optional Vicinae launcher; deploys `ly/config.ini` to `/etc/ly/config.ini` (sudo symlink) and enables `ly@tty2.service` (display manager on tty2).
 
 ### Options
 
@@ -69,6 +69,7 @@ dotfiles/
 ├── sway/                     # Sway window manager config
 ├── waybar/                   # Waybar status bar (config + style.css)
 ├── hypr/                     # Hyprland config (hyprland.conf, 1.5x HiDPI scaling)
+├── ly/                       # ly display manager config (install.sh deploys it to /etc/ly/config.ini; greeter on tty2)
 ├── noctalia/                 # Noctalia shell settings.toml (stowed to ~/.local/state/noctalia, not ~/.config)
 ├── scripts/                  # standalone scripts
 │   ├── agent-float-toggle.sh   # sway Alt+G floating agent chat window (Linux only)
@@ -93,7 +94,7 @@ dotfiles/
 
 ### Linux (Arch / Debian / Fedora)
 
-**Packages:** almost the same list as macOS, minus `asdf rustup-init`; the distro adds `dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman` (Arch also installs `alacritty ghostty hyprland foot noctalia`). Rust comes from the `rustup` script; on Debian, `fd` is symlinked from `fdfind` and `eza` is downloaded from GitHub releases. [`install.sh`](install.sh) is the source of truth.
+**Packages:** almost the same list as macOS, minus `asdf rustup-init`; the distro adds `dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman` (Arch also installs `alacritty ghostty hyprland foot noctalia hyprpolkitagent brightnessctl xdg-desktop-portal-hyprland grim slurp ly`). Rust comes from the `rustup` script; on Debian, `fd` is symlinked from `fdfind` and `eza` is downloaded from GitHub releases. [`install.sh`](install.sh) is the source of truth.
 
 ---
 
@@ -114,7 +115,7 @@ brew install --cask alacritty ghostty raycast visual-studio-code iterm2 font-fir
 **Arch Linux:**
 
 ```bash
-sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
+sudo pacman -S --needed stow fish neovim helix fzf eza fd bat zoxide thefuck lazygit ripgrep jq github-cli git btop alacritty ghostty hyprland foot noctalia dunst wl-clipboard xclip hyprpolkitagent brightnessctl xdg-desktop-portal-hyprland grim slurp ly ttf-firacode-nerd thunar thunar-archive-plugin thunar-volman
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ```
 
@@ -211,7 +212,15 @@ Logs go to `~/.local/state/obsidian-sync.log`. Before a big vault reorganization
 
 ### Floating agent window (Linux / sway only)
 
-`sway/config` binds `Alt+G` to `scripts/agent-float-toggle.sh`: it starts `pi` if not running, and shows/hides it in a scratchpad otherwise. The script path is absolute; adjust it if the repo lives elsewhere.
+`sway/config` binds `Alt+G` to `scripts/agent-float-toggle.sh`: it starts `pi` if not running, and shows/hides it in a scratchpad otherwise. The script path is absolute; adjust it if the repo lives elsewhere. `hypr/hyprland.conf` binds the same key via a `special:agent` workspace.
+
+### Display manager: ly (Linux only)
+
+`install.sh` symlinks `ly/config.ini` -> `/etc/ly/config.ini` (the stock file is
+kept as `config.ini.orig`) and enables `ly@tty2.service`. Pick **Hyprland** once
+at the greeter (arrow keys; `save = true` remembers it). Bare tty1 logins still
+auto-start sway from the tail of `fish/config.fish`; a ly session sets
+`XDG_SESSION_DESKTOP`, so the fallback is skipped there.
 
 ### Secrets (not tracked)
 

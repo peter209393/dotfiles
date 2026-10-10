@@ -1,7 +1,7 @@
 # Dotfiles - Complete Feature Guide
 
 A cross-platform (**macOS** + **Linux**) dotfiles repo for **Fish**, **Neovim**,
-**Helix**, **Alacritty**, **Ghostty**, **i3 / Sway / Waybar**, and **tmux**. Entry point is `install.sh`.
+**Helix**, **Alacritty**, **Ghostty**, **i3 / Sway / Hyprland / Waybar**, **ly**, and **tmux**. Entry point is `install.sh`.
 
 > See `readme.md` for install steps. This file documents **what each config does
 > and how to use every feature**.
@@ -21,6 +21,7 @@ A cross-platform (**macOS** + **Linux**) dotfiles repo for **Fish**, **Neovim**,
 - [4. Ghostty](#4-ghostty)
 - [5. i3 (Linux X11)](#5-i3-linux-x11)
 - [6. Sway (Linux Wayland)](#6-sway-linux-wayland)
+- [6a. Hyprland + ly (Linux Wayland)](#6a-hyprland--ly-linux-wayland)
 - [7. Waybar](#7-waybar)
 - [8. Tmux (Oh My Tmux!)](#8-tmux-oh-my-tmux)
 - [9. Helix](#9-helix)
@@ -50,6 +51,8 @@ It is **idempotent** - safe to re-run. The flow:
 5. Install Fisher plugins
 6. `nvim --headless "+Lazy! sync"` to pull nvim plugins
 7. Write `~/.config/fish/conf.d/_99_dotfiles_env.fish` (proxy + fcitx env, commented out)
+8. Linux only: deploy `ly/config.ini` to `/etc/ly/config.ini` (sudo symlink) and
+   enable `ly@tty2.service`
 
 **Stow targets** (symlinks created):
 
@@ -63,8 +66,14 @@ fcitx5/    -> ~/.config/fcitx5   (conf/cached_layouts stays local)
 i3/        -> ~/.config/i3
 sway/      -> ~/.config/sway
 waybar/    -> ~/.config/waybar
+hypr/      -> ~/.config/hypr
+noctalia/  -> ~/.local/state/noctalia
 tmux/      -> ~   (.tmux.conf.local)
 ```
+
+`ly/` is **not** stowed - its target `/etc/ly` is root-owned. `install.sh`
+instead symlinks `ly/config.ini` -> `/etc/ly/config.ini` with `sudo` (stock file
+kept as `config.ini.orig`; package upgrades surface as `.pacnew`).
 
 **Verify after install:**
 
@@ -106,7 +115,7 @@ Every `*.fish` file in `conf.d/` is sourced at shell startup.
 | `10_path_common.fish` | Common PATH for both platforms |
 | `11_path_macos.fish` | macOS: Homebrew, Flutter, Java 17, Android SDK |
 | `12_path_linux.fish` | Linux: Linuxbrew, snap, flatpak |
-| `20_sway_linux.fish` | **Auto-starts Sway on tty1** (Linux) |
+| *(tail of `config.fish`)* | **Auto-starts Sway on a bare tty1 login** (Linux) - skipped when a display manager already set `XDG_SESSION_DESKTOP` |
 | `30_herd_macos.fish` | Herd-Lite PHP env (macOS) |
 | `31_crush_macos.fish` | Ensures Homebrew bin on PATH so `crush` runs from GUI-launched shells |
 | `asdf.fish` | ASDF version manager shims |
@@ -466,7 +475,49 @@ Config in `sway/config`:
   color on; `DP-1` scaled 1.5x.
 - Bar = **Waybar** (bottom). Android Emulator floats.
 
-> On Linux, **tty1 auto-launches Sway** via `fish/conf.d/20_sway_linux.fish`.
+> On Linux, **tty1 auto-launches Sway** from the tail of `fish/config.fish`.
+> A ly-started session sets `XDG_SESSION_DESKTOP`, so the exec is skipped there.
+
+---
+
+## 6a. Hyprland + ly (Linux Wayland)
+
+Config in `hypr/hyprland.conf` (stowed to `~/.config/hypr/hyprland.conf`):
+
+- **Mod = Alt**, same vim-key window model as sway/i3: `Alt+H/J/K/L` focus,
+  `Alt+Shift+H/J/K/L` move, `Alt+1..0` workspaces, `Alt+Shift+1..0` move to
+  workspace. `Alt+R` resize submap (`H/J/K/L`, `Return`/`Esc` exits).
+- `Alt+Enter` foot (via `footclient`; a `foot --server` is started once) -
+  `Alt+Shift+Q` kill - `Alt+Shift+C` reload - `Alt+Shift+E` exit.
+- **Shell = Noctalia** (`noctalia -d`): `Alt+P` launcher, `Alt+Shift+B` bar
+  toggle, `Alt+,` settings. Lock via `Alt+Ctrl+L`.
+- **Window groups** driven by `scripts/win-stack.py`: `Alt+S` stacks every
+  tiled window on the workspace into one group, `Alt+E` unstacks; `Alt+W` /
+  `Alt+Shift+W` cycle group members.
+- **Scratch workspaces:** `special:scratch` (`Alt+-` toggle, `Alt+Shift+-`
+  send) and `special:agent` for the floating agent window (`Alt+G`, same
+  `scripts/agent-float-toggle.sh` as sway).
+- Flat by design: no blur, no shadows, no animations, `rounding = 0`, gaps 10/20,
+  2px Catppuccin Mocha borders (mauve active / surface inactive). Monitor at
+  `preferred`, **1.5x scale**, `xwayland force_zero_scaling`.
+- Input: `ctrl:nocaps`, repeat 225ms/33Hz, natural scroll + tap-to-click.
+- Media keys: volume/mute (pulse), brightness 5% steps; screenshots: `Print`
+  full -> clipboard, `Alt+Shift+S` region -> clipboard, `Alt+Ctrl+S` region ->
+  `~/Pictures/`.
+- Autostarts: foot server, noctalia, fcitx5, hyprpolkitagent; restarts pipewire /
+  wireplumber / xdg-desktop-portal(-hyprland).
+- Android Emulator and `agent-float` windows float automatically.
+
+### ly display manager (login screen)
+
+- `ly/config.ini` holds only overrides (`hide_version_string`, `save = true`);
+  everything else stays at ly defaults (`/etc/ly/config.ini.example` documents
+  all keys).
+- `install.sh` symlinks it to `/etc/ly/config.ini` and enables `ly@tty2.service`:
+  the greeter owns **tty2**, bare tty1 logins keep the Sway fallback above.
+- Session list comes from `/usr/share/wayland-sessions`; pick **Hyprland** once
+  (arrow keys move between login / password / session) - `save = true` remembers
+  it. F1 shutdown, F2 reboot, F3 sleep, F7 show password.
 
 ---
 
