@@ -221,6 +221,14 @@ systemctl --user enable --now obsidian-sync.timer
 **Hyprland** 即可(`save = true` 会记住)。裸 tty1 登录仍从 `fish/config.fish`
 末尾自动启动 sway;ly 会话会设置 `XDG_SESSION_DESKTOP`,自动跳过该回退。
 
+### 壁纸(Linux / Noctalia)
+
+`noctalia/settings.toml` 从 `~/hyprland_wallpapers` 读取壁纸,每次启动随机换一张。先把壁纸库克隆到该位置:
+
+```bash
+git clone --depth=1 https://github.com/Ajaymanikandan0x/hyprland_wallpapers.git ~/hyprland_wallpapers
+```
+
 ### 机密文件(不入库)
 
 `fish/conf.d/local.fish` 已加入 `.gitignore`:私钥、API token 等真实值只存在本机。

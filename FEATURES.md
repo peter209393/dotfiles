@@ -490,7 +490,8 @@ Config in `hypr/hyprland.conf` (stowed to `~/.config/hypr/hyprland.conf`):
 - `Alt+Enter` foot (via `footclient`; a `foot --server` is started once) -
   `Alt+Shift+Q` kill - `Alt+Shift+C` reload - `Alt+Shift+E` exit.
 - **Shell = Noctalia** (`noctalia -d`): `Alt+P` launcher, `Alt+Shift+B` bar
-  toggle, `Alt+,` settings. Lock via `Alt+Ctrl+L`.
+  toggle, `Alt+,` settings. Lock via `Alt+Ctrl+L`. Wallpaper: random pick from
+  `~/hyprland_wallpapers` at each start (clone command in README).
 - **Window groups** driven by `scripts/win-stack.py`: `Alt+S` stacks every
   tiled window on the workspace into one group, `Alt+E` unstacks; `Alt+W` /
   `Alt+Shift+W` cycle group members.

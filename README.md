@@ -222,6 +222,14 @@ at the greeter (arrow keys; `save = true` remembers it). Bare tty1 logins still
 auto-start sway from the tail of `fish/config.fish`; a ly session sets
 `XDG_SESSION_DESKTOP`, so the fallback is skipped there.
 
+### Wallpapers (Linux / Noctalia)
+
+`noctalia/settings.toml` reads wallpapers from `~/hyprland_wallpapers` and picks a random one at each start. Clone the collection there:
+
+```bash
+git clone --depth=1 https://github.com/Ajaymanikandan0x/hyprland_wallpapers.git ~/hyprland_wallpapers
+```
+
 ### Secrets (not tracked)
 
 `fish/conf.d/local.fish` is gitignored: real private keys and API tokens stay on
