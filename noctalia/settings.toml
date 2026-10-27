@@ -116,13 +116,13 @@ directory = "/home/peter/hyprland_wallpapers"
     recursive = false
 
     [wallpaper.default]
-    path = "/home/peter/hyprland_wallpapers/platforms.png"
+    path = "/home/peter/hyprland_wallpapers/charcoal hill.jpg"
 
     [wallpaper.last]
-    path = "/home/peter/hyprland_wallpapers/platforms.png"
+    path = "/home/peter/hyprland_wallpapers/charcoal hill.jpg"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+    path = "/home/peter/hyprland_wallpapers/charcoal hill.jpg"
 
     [wallpaper.monitors.eDP-1]
     path = "/home/peter/hyprland_wallpapers/platforms.png"
