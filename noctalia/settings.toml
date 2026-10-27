@@ -100,17 +100,29 @@ app_icon_color = "#ffffff"
 app_icon_colorize = true
 
 [theme]
-builtin = "Dracula"
+builtin = "Ayu"
 community_palette = "Ayu Blue"
 mode = "dark"
 source = "builtin"
 wallpaper_scheme = "m3-content"
 
-[wallpaper.default]
-path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+[wallpaper]
+directory = "/home/peter/hyprland_wallpapers"
 
-[wallpaper.last]
-path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+    [wallpaper.automation]
+    enabled = true
+    interval_seconds = 86400
+    order = "random"
+    recursive = false
 
-[wallpaper.monitors.DP-1]
-path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+    [wallpaper.default]
+    path = "/home/peter/hyprland_wallpapers/platforms.png"
+
+    [wallpaper.last]
+    path = "/home/peter/hyprland_wallpapers/platforms.png"
+
+    [wallpaper.monitors.DP-1]
+    path = "/home/peter/Pictures/new-zealand-wallpaper.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/peter/hyprland_wallpapers/platforms.png"
